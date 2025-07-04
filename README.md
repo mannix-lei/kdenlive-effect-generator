@@ -280,7 +280,6 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 如有问题或建议，请通过以下方式联系：
 
 - 提交 [GitHub Issue](https://github.com/your-repo/kdenlive-effect-generator/issues)
-- 发送邮件到: your-email@example.com
 
 ## 🙏 致谢
 
