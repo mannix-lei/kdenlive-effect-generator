@@ -140,7 +140,10 @@ async function loadEffects(styleName) {
                             <button class="btn btn-sm btn-outline-primary" onclick="event.stopPropagation(); showEffectDetails('${styleName}', '${effect.id}')">
                                 <i class="fas fa-eye"></i> 详情
                             </button>
-                            ${effect.has_preview ? '' : 
+                            ${effect.has_preview ? 
+                                `<button class="btn btn-sm btn-outline-warning" onclick="event.stopPropagation(); regeneratePreview('${styleName}', '${effect.id}')" title="重新生成预览">
+                                    <i class="fas fa-redo"></i> 重生成
+                                </button>` :
                                 `<button class="btn btn-sm btn-outline-success" onclick="event.stopPropagation(); generateSinglePreview('${styleName}', '${effect.id}')">
                                     <i class="fas fa-video"></i> 预览
                                 </button>`}
@@ -341,6 +344,72 @@ async function generateSinglePreview(styleName, effectId) {
     }
 }
 
+// 重新生成预览
+async function regeneratePreview(styleName, effectId) {
+    if (!styleName || !effectId) {
+        showAlert('参数错误', 'danger');
+        return;
+    }
+    
+    // 确认对话框
+    if (!confirm(`确定要重新生成 ${effectId} 的预览视频吗？这将删除现有的预览视频。`)) {
+        return;
+    }
+    
+    try {
+        showLoading('正在重新生成预览视频...');
+        
+        const response = await fetch('/api/regenerate_preview', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                style: styleName, 
+                effect_id: effectId 
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok && result.success) {
+            showAlert(result.message || '预览视频重新生成成功', 'success');
+            
+            // 更新当前详情页面的预览视频（如果正在查看这个特效）
+            if (currentEffect && currentEffect.styleName === styleName && currentEffect.effectId === effectId) {
+                const previewVideo = document.getElementById('previewVideo');
+                if (previewVideo) {
+                    // 添加时间戳防止缓存
+                    const timestamp = new Date().getTime();
+                    previewVideo.src = `/${result.preview_file}?t=${timestamp}`;
+                    previewVideo.load(); // 重新加载视频
+                }
+                
+                // 更新预览容器
+                document.getElementById('previewContainer').innerHTML = `
+                    <video id="previewVideo" class="w-100" controls style="max-height: 400px;">
+                        <source src="/${result.preview_file}?t=${timestamp}" type="video/mp4">
+                    </video>
+                `;
+            }
+            
+            // 刷新特效列表以更新预览状态
+            if (currentStyle === styleName) {
+                await loadEffects(styleName);
+            }
+            
+        } else {
+            showAlert(`重新生成预览失败: ${result.error}`, 'danger');
+        }
+        
+    } catch (error) {
+        console.error('Failed to regenerate preview:', error);
+        showAlert('重新生成预览失败', 'danger');
+    } finally {
+        hideLoading();
+    }
+}
+
 // 批量生成预览
 async function generatePreviews() {
     if (!currentStyle) {
@@ -422,23 +491,23 @@ async function refreshData() {
 
 // Demos相关功能
 // 显示Demos模态框
-async function showDemosModal() {
-    try {
-        if (!demosModal) {
-            demosModal = new bootstrap.Modal(document.getElementById('demosModal'));
-        }
+// async function showDemosModal() {
+//     try {
+//         if (!demosModal) {
+//             demosModal = new bootstrap.Modal(document.getElementById('demosModal'));
+//         }
         
-        showLoading('正在加载Demo视频...');
-        await loadDemos();
-        demosModal.show();
+//         showLoading('正在加载Demo视频...');
+//         await loadDemos();
+//         demosModal.show();
         
-    } catch (error) {
-        console.error('Failed to show demos modal:', error);
-        showAlert('加载Demo视频失败', 'danger');
-    } finally {
-        hideLoading();
-    }
-}
+//     } catch (error) {
+//         console.error('Failed to show demos modal:', error);
+//         showAlert('加载Demo视频失败', 'danger');
+//     } finally {
+//         hideLoading();
+//     }
+// }
 
 // 加载Demos列表
 async function loadDemos() {

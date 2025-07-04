@@ -6,7 +6,7 @@
 
 - 🎬 自动生成符合kdenlive规范的effect XML文件
 - 🎨 支持多种风格：抖动、缩放、模糊、转场、故障、色彩等
-- 👀 智能预览视频生成（720x1280, 9:16 竖屏）
+- 👀 智能预览视频生成（1080x1920, 9:16 竖屏）
 - 📁 按风格分类存储和管理特效文件
 - 🌐 现代化Web界面，支持在线预览和管理
 - 🤖 AI驱动的参数生成和优化
@@ -118,8 +118,8 @@ MELT_PATH=/Applications/kdenlive.app/Contents/MacOS/melt
 FFMPEG_PATH=/Applications/kdenlive.app/Contents/MacOS/ffmpeg
 
 # 预览视频配置
-PREVIEW_WIDTH=720
-PREVIEW_HEIGHT=1280
+PREVIEW_WIDTH=1080
+PREVIEW_HEIGHT=1920
 PREVIEW_DURATION=5
 PREVIEW_FPS=25
 
@@ -145,7 +145,7 @@ WEB_PORT=5000
 
 - **支持的视频格式**: mp4, mov, avi, mkv, webm
 - **支持的图片格式**: jpg, jpeg, png, bmp, tiff
-- **推荐分辨率**: 720x1280 (9:16 竖屏) 或更高
+- **推荐分辨率**: 1080x1920 (9:16 竖屏) 或更高
 - **建议时长**: 视频素材建议10秒以上
 
 ## 🌐 Web界面功能

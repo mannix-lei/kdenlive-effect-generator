@@ -23,8 +23,8 @@ class PreviewGenerator:
         self.effects_dir = self.project_root / "effects"
         
         # 预览视频配置
-        self.width = 720
-        self.height = 1280  # 9:16比例
+        self.width = 1080
+        self.height = 1920  # 9:16比例
         self.duration = 5  # 5秒
         self.fps = 25
         
@@ -62,9 +62,6 @@ class PreviewGenerator:
         """查找melt命令路径"""
         possible_paths = [
             "/Applications/kdenlive.app/Contents/MacOS/melt",  # macOS Kdenlive
-            "/usr/local/bin/melt",  # Homebrew
-            "/opt/homebrew/bin/melt",  # Homebrew (Apple Silicon)
-            "melt"  # System PATH
         ]
         
         for path in possible_paths:

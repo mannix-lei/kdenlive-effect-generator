@@ -14,7 +14,7 @@ try:
 except ImportError:
     PIL_AVAILABLE = False
 
-def create_test_image(output_path: Path, width: int = 720, height: int = 1280):
+def create_test_image(output_path: Path, width: int = 1080, height: int = 1920):
     """创建测试图片"""
     if PIL_AVAILABLE:
         # 创建一个渐变背景图片
@@ -45,7 +45,7 @@ def create_test_image(output_path: Path, width: int = 720, height: int = 1280):
         print("PIL not available, cannot create test image")
         return False
 
-def create_test_video_with_python(output_path: Path, width: int = 720, height: int = 1280, duration: int = 5, fps: int = 25):
+def create_test_video_with_python(output_path: Path, width: int = 1080, height: int = 1920, duration: int = 5, fps: int = 25):
     """使用Python创建简单的测试视频"""
     try:
         import cv2

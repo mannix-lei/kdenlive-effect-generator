@@ -1,8 +1,0 @@
-<effectgroup description="各种模糊效果" id="blur_3493" parentIn="0">
- <description>各种模糊效果</description>
- <effect id="avfilter.dblur">
-  <property name="av.planes">15</property>
-  <property name="av.radius">0=0;22=47;44=0</property>
-  <property name="av.angle">0=186.45391984362445;44=186.45391984362445</property>
- </effect>
-</effectgroup>

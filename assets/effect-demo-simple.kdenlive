@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mlt LC_NUMERIC="en_US.UTF-8" producer="main_bin" root="/Users/youngmannix/Documents/kdenalive/kdenlive-effect-generator" version="7.32.0">
+ <profile colorspace="709" description="1080*1920 25.00fps" display_aspect_den="1920" display_aspect_num="1080" frame_rate_den="1" frame_rate_num="25" height="1920" progressive="1" sample_aspect_den="1" sample_aspect_num="1" width="1080"/>
+ 
+ <producer id="producer1" in="00:00:00.000" out="00:00:04.960">
+  <property name="length">00:00:05.000</property>
+  <property name="eof">pause</property>
+  <property name="resource">/Users/youngmannix/Documents/kdenalive/kdenlive-effect-generator/assets/sample_image.jpg</property>
+  <property name="ttl">25</property>
+  <property name="aspect_ratio">1</property>
+  <property name="meta.media.progressive">1</property>
+  <property name="seekable">1</property>
+  <property name="format">1</property>
+  <property name="meta.media.width">1080</property>
+  <property name="meta.media.height">1920</property>
+  <property name="mlt_service">qimage</property>
+  <property name="kdenlive:duration">00:00:05.000</property>
+  <property name="kdenlive:id">1</property>
+  <property name="kdenlive:clip_type">2</property>
+ </producer>
+ 
+ <producer id="producer0" in="00:00:00.000" out="00:05:00.000">
+  <property name="length">2147483647</property>
+  <property name="eof">continue</property>
+  <property name="resource">black</property>
+  <property name="aspect_ratio">1</property>
+  <property name="mlt_service">color</property>
+  <property name="kdenlive:playlistid">black_track</property>
+  <property name="mlt_image_format">rgba</property>
+  <property name="set.test_audio">0</property>
+ </producer>
+
+ <playlist id="playlist_main">
+  <entry in="00:00:00.000" out="00:00:04.960" producer="producer1">
+   <property name="kdenlive:id">1</property>
+   <filter id="filter_scale">
+    <property name="mlt_service">qtblend</property>
+    <property name="kdenlive_id">qtblend</property>
+    <property name="rect">0 0 1080 1980 1.0</property>
+    <property name="compositing">0</property>
+    <property name="distort">1</property>
+    <property name="rotate_center">1</property>
+    <property name="kdenlive:collapsed">0</property>
+   </filter>
+  </entry>
+ </playlist>
+
+ <tractor id="main_tractor" in="00:00:00.000" out="00:00:04.960">
+  <property name="kdenlive:duration">00:00:05.000</property>
+  <track producer="producer0"/>
+  <track producer="playlist_main"/>
+  <transition id="transition0">
+   <property name="a_track">0</property>
+   <property name="b_track">1</property>
+   <property name="compositing">0</property>
+   <property name="distort">1</property>
+   <property name="rotate_center">1</property>
+   <property name="mlt_service">qtblend</property>
+   <property name="kdenlive_id">qtblend</property>
+   <property name="always_active">1</property>
+  </transition>
+ </tractor>
+
+ <playlist id="main_bin">
+  <property name="kdenlive:docproperties.version">1.1</property>
+  <property name="xml_retain">1</property>
+  <entry in="00:00:00.000" out="00:00:04.960" producer="producer1"/>
+  <entry in="00:00:00.000" out="00:00:04.960" producer="main_tractor"/>
+ </playlist>
+ 
+ <tractor id="root_tractor" in="00:00:00.000" out="00:00:04.960">
+  <property name="kdenlive:projectTractor">1</property>
+  <track in="00:00:00.000" out="00:00:04.960" producer="main_tractor"/>
+ </tractor>
+</mlt>

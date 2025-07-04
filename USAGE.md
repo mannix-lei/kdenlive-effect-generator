@@ -264,8 +264,8 @@ MELT_PATH=/Applications/kdenlive.app/Contents/MacOS/melt
 FFMPEG_PATH=/Applications/kdenlive.app/Contents/MacOS/ffmpeg
 
 # 预览视频参数
-PREVIEW_WIDTH=720          # 预览视频宽度
-PREVIEW_HEIGHT=1280        # 预览视频高度（9:16竖屏）
+PREVIEW_WIDTH=1080          # 预览视频宽度
+PREVIEW_HEIGHT=1920        # 预览视频高度（9:16竖屏）
 PREVIEW_DURATION=5         # 预览视频时长（秒）
 PREVIEW_FPS=25            # 预览视频帧率
 
@@ -325,7 +325,7 @@ CACHE_MAX_SIZE=1000       # 缓存最大数量
 ### 素材建议
 
 #### 分辨率建议
-- **推荐分辨率**: 720x1280 (9:16 竖屏)
+- **推荐分辨率**: 1080x1920 (9:16 竖屏)
 - **最低分辨率**: 480x854
 - **最高分辨率**: 1080x1920 (更高分辨率会被自动缩放)
 
