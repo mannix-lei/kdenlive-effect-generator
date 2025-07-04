@@ -196,29 +196,46 @@ async function showEffectDetails(styleName, effectId) {
             
             // 设置预览视频
             const previewVideo = document.getElementById('previewVideo');
+            const previewContainer = document.getElementById('previewContainer');
             const previewFile = `previews/${styleName}/${effectId}_preview.mp4`;
             
-            // 检查预览文件是否存在
-            fetch(`/${previewFile}`, { method: 'HEAD' })
-                .then(response => {
-                    if (response.ok) {
-                        previewVideo.src = `/${previewFile}`;
-                        previewVideo.style.display = 'block';
-                    } else {
-                        previewVideo.style.display = 'none';
-                        document.getElementById('previewContainer').innerHTML = `
-                            <div class="text-center p-4 bg-light">
-                                <i class="fas fa-video-slash fa-3x text-muted mb-3"></i>
-                                <p class="text-muted">暂无预览视频</p>
-                                <button class="btn btn-success" onclick="generateSinglePreview()">
-                                    <i class="fas fa-video"></i> 生成预览
-                                </button>
-                            </div>
-                        `;
-                    }
-                });
-            
+            // 显示模态框
             effectModal.show();
+            
+            // 延迟一点再设置视频，确保模态框完全渲染
+            setTimeout(() => {
+                // 重新获取元素，确保模态框已经显示
+                const video = document.getElementById('previewVideo');
+                const container = document.getElementById('previewContainer');
+                
+                // 检查预览文件是否存在
+                fetch(`/${previewFile}`, { method: 'HEAD' })
+                    .then(response => {
+                        if (response.ok && video) {
+                            video.src = `/${previewFile}`;
+                            video.style.display = 'block';
+                        } else {
+                            if (video) {
+                                video.style.display = 'none';
+                            }
+                            if (container) {
+                                container.innerHTML = `
+                                    <div class="text-center p-4 bg-light">
+                                        <i class="fas fa-video-slash fa-3x text-muted mb-3"></i>
+                                        <p class="text-muted">暂无预览视频</p>
+                                        <button class="btn btn-success" onclick="generateSinglePreview()">
+                                            <i class="fas fa-video"></i> 生成预览
+                                        </button>
+                                    </div>
+                                `;
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error checking preview file:', error);
+                    });
+            }, 100);
+            
         } else {
             showAlert('加载特效详情失败', 'danger');
         }
@@ -318,13 +335,20 @@ async function generateSinglePreview(styleName, effectId) {
             // 更新预览视频
             if (currentEffect && currentEffect.styleName === styleName && currentEffect.effectId === effectId) {
                 const previewVideo = document.getElementById('previewVideo');
-                previewVideo.src = `/${result.preview_file}`;
-                previewVideo.style.display = 'block';
-                document.getElementById('previewContainer').innerHTML = `
-                    <video id="previewVideo" class="w-100" controls style="max-height: 400px;">
-                        <source src="/${result.preview_file}" type="video/mp4">
-                    </video>
-                `;
+                const previewContainer = document.getElementById('previewContainer');
+                
+                if (previewVideo) {
+                    previewVideo.src = `/${result.preview_file}`;
+                    previewVideo.style.display = 'block';
+                }
+                
+                if (previewContainer) {
+                    previewContainer.innerHTML = `
+                        <video id="previewVideo" class="w-100" controls style="max-height: 400px;">
+                            <source src="/${result.preview_file}" type="video/mp4">
+                        </video>
+                    `;
+                }
             }
             
             // 刷新特效列表
@@ -378,6 +402,8 @@ async function regeneratePreview(styleName, effectId) {
             // 更新当前详情页面的预览视频（如果正在查看这个特效）
             if (currentEffect && currentEffect.styleName === styleName && currentEffect.effectId === effectId) {
                 const previewVideo = document.getElementById('previewVideo');
+                const previewContainer = document.getElementById('previewContainer');
+                
                 if (previewVideo) {
                     // 添加时间戳防止缓存
                     const timestamp = new Date().getTime();
@@ -385,12 +411,15 @@ async function regeneratePreview(styleName, effectId) {
                     previewVideo.load(); // 重新加载视频
                 }
                 
-                // 更新预览容器
-                document.getElementById('previewContainer').innerHTML = `
-                    <video id="previewVideo" class="w-100" controls style="max-height: 400px;">
-                        <source src="/${result.preview_file}?t=${timestamp}" type="video/mp4">
-                    </video>
-                `;
+                if (previewContainer) {
+                    // 更新预览容器
+                    const timestamp = new Date().getTime();
+                    previewContainer.innerHTML = `
+                        <video id="previewVideo" class="w-100" controls style="max-height: 400px;">
+                            <source src="/${result.preview_file}?t=${timestamp}" type="video/mp4">
+                        </video>
+                    `;
+                }
             }
             
             // 刷新特效列表以更新预览状态
