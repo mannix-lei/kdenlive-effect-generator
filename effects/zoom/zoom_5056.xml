@@ -1,0 +1,17 @@
+<effectgroup description="缩放、推拉镜头效果" id="zoom_5056" parentIn="0">
+ <description>缩放、推拉镜头效果</description>
+ <effect id="qtblend">
+  <property name="rotation">0=0;177=0</property>
+  <property name="rect">0=-71 -127 1223 2174 1.000000;177=-71 -126 1222 2173 1.000000</property>
+  <property name="rotate_center">1</property>
+  <property name="distort">0</property>
+  <property name="compositing">0</property>
+ </effect>
+ <effect id="frei0r.lenscorrection">
+  <property name="correctionnearcenter">0=0.5;177=0.21135281677074005</property>
+  <property name="brightness">0=0;177=0.2526329759173613</property>
+  <property name="correctionnearedges">0=0.5;177=0.21135281677074005</property>
+  <property name="ycenter">0=0.5;177=0.5</property>
+  <property name="xcenter">0=0.5;177=0.5</property>
+ </effect>
+</effectgroup>

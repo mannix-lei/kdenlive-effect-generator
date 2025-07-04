@@ -1,0 +1,210 @@
+/* 自定义样式 */
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: none;
+}
+
+.list-group-item {
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+.list-group-item.active {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.effect-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    height: 100%;
+}
+
+.effect-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.effect-preview {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.effect-preview-placeholder {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 4px;
+    font-size: 24px;
+}
+
+.badge-style {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.effect-info {
+    padding: 15px;
+}
+
+.effect-title {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.effect-description {
+    font-size: 0.9em;
+    color: #6c757d;
+    margin-bottom: 10px;
+    height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.effect-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Demo卡片样式 */
+.demo-card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    height: 100%;
+}
+
+.demo-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.demo-preview {
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+}
+
+.demo-preview:hover {
+    opacity: 0.9;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .effect-card {
+        margin-bottom: 20px;
+    }
+    
+    .modal-dialog {
+        margin: 10px;
+        max-width: calc(100% - 20px);
+    }
+}
+
+/* 代码高亮 */
+pre {
+    background-color: #f8f9fa !important;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    font-size: 0.85em;
+    line-height: 1.4;
+}
+
+/* 加载动画 */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* 风格图标 */
+.style-icon {
+    width: 24px;
+    text-align: center;
+    margin-right: 8px;
+}
+
+/* 统计标签 */
+.stat-badge {
+    font-size: 0.75em;
+    padding: 2px 6px;
+}
+
+/* 视频容器 */
+.video-container {
+    position: relative;
+    background: #000;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.video-container video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* 按钮组 */
+.btn-group-vertical .btn {
+    border-radius: 0;
+}
+
+.btn-group-vertical .btn:first-child {
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+}
+
+.btn-group-vertical .btn:last-child {
+    border-bottom-left-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Demos模态框样式 */
+#demosModal .modal-dialog {
+    max-width: 1200px;
+}
+
+#demosGrid {
+    max-height: 600px;
+    overflow-y: auto;
+}

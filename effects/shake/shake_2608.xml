@@ -1,0 +1,21 @@
+<effect id="shake_2608" tag="qtblend" type="customVideo" version="2">
+ <n>Shake Effect</n>
+ <description>相机抖动、震动效果</description>
+ <author>AI Effect Generator</author>
+ <parameter default="0 0 %width %height 1" name="rect" type="animatedrect" value="0=20 -18 1080 1920 1.000000;15=22 -3 1080 1920 1.000000;30=26 -12 1080 1920 1.000000;45=34 -30 1080 1920 1.000000;60=3 -23 1080 1920 1.000000;75=2 -2 1080 1920 1.000000">
+  <n>Rectangle</n>
+ </parameter>
+ <parameter compact="1" decimals="2" default="0" max="360" min="-360" name="rotation" notintimeline="1" suffix="°" type="animated" value="0=0.5876635748025483;15=-0.20194886621461838;30=-0.6773518430140062;45=-0.06720201380271484;60=0.15126472031530547;75=-0.6235934496473476">
+  <n>Rotation</n>
+ </parameter>
+ <parameter default="0" name="compositing" paramlist="0;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;6;8" type="list" value="0">
+  <paramlistdisplay>Alpha blend,Xor,Plus,Multiply,Screen,Overlay,Darken,Lighten,Color dodge,Color burn,Hard light,Soft light,Difference,Exclusion,Bitwise or,Bitwise and,Bitwise xor,Bitwise nor,Bitwise nand,Bitwise not xor,Destination in,Destination out</paramlistdisplay>
+  <n>Compositing</n>
+ </parameter>
+ <parameter default="0" max="1" min="0" name="distort" type="bool" value="0">
+  <n>Distort</n>
+ </parameter>
+ <parameter default="1" max="1" min="0" name="rotate_center" type="bool" value="1">
+  <n>Rotate from center</n>
+ </parameter>
+</effect>

@@ -1,0 +1,12 @@
+<effectgroup description="故障艺术、数字噪声" id="glitch_9577" parentIn="0">
+ <description>故障艺术、数字噪声</description>
+ <effect id="avfilter.dblur">
+  <property name="av.planes">15</property>
+  <property name="av.radius">0=0;5=0;10=196;15=79;20=151;25=102;30=0;35=86;40=133;45=0;50=199;55=181;60=181;65=92;70=234;75=0;80=236;85=74;90=178;95=132;100=136;105=168;110=214;115=149;120=112</property>
+  <property name="av.angle">0=110.05629176792223;125=220.11258353584446</property>
+ </effect>
+ <effect id="avfilter.exposure">
+  <property name="av.exposure">0=-0.35989824515385305;125=0.35989824515385305</property>
+  <property name="av.black">0=0;125=0</property>
+ </effect>
+</effectgroup>

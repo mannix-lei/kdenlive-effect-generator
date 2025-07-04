@@ -1,0 +1,21 @@
+<effect id="shake_5458" tag="qtblend" type="customVideo" version="2">
+ <n>Shake Effect</n>
+ <description>相机抖动、震动效果</description>
+ <author>AI Effect Generator</author>
+ <parameter default="0 0 %width %height 1" name="rect" type="animatedrect" value="0=-44 38 1080 1920 1.000000;15=45 124 1080 1920 1.000000;30=94 124 1080 1920 1.000000;45=-80 12 1080 1920 1.000000;60=114 4 1080 1920 1.000000;75=47 -128 1080 1920 1.000000;90=-79 -125 1080 1920 1.000000;105=-32 10 1080 1920 1.000000;120=-141 -132 1080 1920 1.000000;135=-29 122 1080 1920 1.000000;150=-115 -124 1080 1920 1.000000;165=-13 54 1080 1920 1.000000;180=46 4 1080 1920 1.000000">
+  <n>Rectangle</n>
+ </parameter>
+ <parameter compact="1" decimals="2" default="0" max="360" min="-360" name="rotation" notintimeline="1" suffix="°" type="animated" value="0=1.3218473055080824;15=-2.452969283197431;30=0.5706347655054484;45=2.799874117466364;60=0.8508087968608304;75=-0.4504782237848328;90=1.6918213456496622;105=2.4535997460714847;120=1.2613846035373588;135=-2.8550676578354834;150=-1.963037735775763;165=1.449439035070418;180=1.8966147964731994">
+  <n>Rotation</n>
+ </parameter>
+ <parameter default="0" name="compositing" paramlist="0;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;6;8" type="list" value="0">
+  <paramlistdisplay>Alpha blend,Xor,Plus,Multiply,Screen,Overlay,Darken,Lighten,Color dodge,Color burn,Hard light,Soft light,Difference,Exclusion,Bitwise or,Bitwise and,Bitwise xor,Bitwise nor,Bitwise nand,Bitwise not xor,Destination in,Destination out</paramlistdisplay>
+  <n>Compositing</n>
+ </parameter>
+ <parameter default="0" max="1" min="0" name="distort" type="bool" value="0">
+  <n>Distort</n>
+ </parameter>
+ <parameter default="1" max="1" min="0" name="rotate_center" type="bool" value="1">
+  <n>Rotate from center</n>
+ </parameter>
+</effect>

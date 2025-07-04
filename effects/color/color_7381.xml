@@ -1,0 +1,13 @@
+<effectgroup description="色彩调节、滤镜" id="color_7381" parentIn="0">
+ <description>色彩调节、滤镜 - dramatic</description>
+ <effect id="avfilter.exposure">
+  <property name="av.exposure">0.6876678140862297</property>
+  <property name="av.black">0</property>
+ </effect>
+ <effect id="frei0r.saturat0r">
+  <property name="saturation">1.1039621896544365</property>
+ </effect>
+ <effect id="frei0r.brightness">
+  <property name="brightness">0.06551665733063466</property>
+ </effect>
+</effectgroup>

@@ -1,0 +1,21 @@
+<effect id="shake_4552" tag="qtblend" type="customVideo" version="2">
+ <n>Shake Effect</n>
+ <description>相机抖动、震动效果</description>
+ <author>AI Effect Generator</author>
+ <parameter default="0 0 %width %height 1" name="rect" type="animatedrect" value="0=-50 31 1080 1920 1.000000;15=10 -40 1080 1920 1.000000;30=36 5 1080 1920 1.000000;45=-40 -40 1080 1920 1.000000;60=17 8 1080 1920 1.000000;75=-12 32 1080 1920 1.000000;90=-6 29 1080 1920 1.000000;105=24 5 1080 1920 1.000000;120=43 -6 1080 1920 1.000000;135=49 -30 1080 1920 1.000000;150=51 12 1080 1920 1.000000;165=8 1 1080 1920 1.000000;180=1 -43 1080 1920 1.000000;195=7 -12 1080 1920 1.000000;210=37 50 1080 1920 1.000000;225=50 39 1080 1920 1.000000;240=-2 19 1080 1920 1.000000;255=53 -23 1080 1920 1.000000;270=-41 25 1080 1920 1.000000;285=-44 -33 1080 1920 1.000000">
+  <n>Rectangle</n>
+ </parameter>
+ <parameter compact="1" decimals="2" default="0" max="360" min="-360" name="rotation" notintimeline="1" suffix="°" type="animated" value="0=0.16340086044603686;15=0.7550249287183077;30=0.1379601561142012;45=0.8464554397054842;60=0.9442392458150191;75=-0.26151999340095045;90=-0.42256357008332757;105=-0.293154879752057;120=0.022492722843580948;135=0.1972613225634947;150=0.18010999684557594;165=-0.002760620679788328;180=-1.0382515437441053;195=-0.4359830246995203;210=-0.10202437833087186;225=0.4709528863687482;240=-0.928453555970784;255=-0.5520121900585028;270=-0.2680149935205508;285=0.2241453438561043">
+  <n>Rotation</n>
+ </parameter>
+ <parameter default="0" name="compositing" paramlist="0;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;6;8" type="list" value="0">
+  <paramlistdisplay>Alpha blend,Xor,Plus,Multiply,Screen,Overlay,Darken,Lighten,Color dodge,Color burn,Hard light,Soft light,Difference,Exclusion,Bitwise or,Bitwise and,Bitwise xor,Bitwise nor,Bitwise nand,Bitwise not xor,Destination in,Destination out</paramlistdisplay>
+  <n>Compositing</n>
+ </parameter>
+ <parameter default="0" max="1" min="0" name="distort" type="bool" value="0">
+  <n>Distort</n>
+ </parameter>
+ <parameter default="1" max="1" min="0" name="rotate_center" type="bool" value="1">
+  <n>Rotate from center</n>
+ </parameter>
+</effect>

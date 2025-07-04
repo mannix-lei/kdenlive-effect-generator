@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API 测试</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 4px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .info { background-color: #d1ecf1; color: #0c5460; }
+        pre { background-color: #f8f9fa; padding: 10px; border-radius: 4px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 API 测试页面</h1>
+    
+    <button onclick="testAPI()">测试所有API</button>
+    
+    <div id="results"></div>
+
+    <script>
+        async function testAPI() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<div class="info">开始测试...</div>';
+            
+            const tests = [
+                { name: '测试风格列表API', url: '/api/styles' },
+                { name: '测试shake特效API', url: '/api/effects/shake' },
+                { name: '测试zoom特效API', url: '/api/effects/zoom' },
+                { name: '测试blur特效API', url: '/api/effects/blur' }
+            ];
+            
+            for (const test of tests) {
+                await runTest(test.name, test.url, resultsDiv);
+            }
+        }
+        
+        async function runTest(name, url, container) {
+            try {
+                console.log(`Testing: ${url}`);
+                const response = await fetch(url);
+                
+                const resultDiv = document.createElement('div');
+                resultDiv.className = 'test-result';
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.className += ' success';
+                    resultDiv.innerHTML = `
+                        <h3>✅ ${name}</h3>
+                        <p>状态: ${response.status} ${response.statusText}</p>
+                        <p>响应数据:</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    const errorText = await response.text();
+                    resultDiv.className += ' error';
+                    resultDiv.innerHTML = `
+                        <h3>❌ ${name}</h3>
+                        <p>状态: ${response.status} ${response.statusText}</p>
+                        <p>错误信息:</p>
+                        <pre>${errorText}</pre>
+                    `;
+                }
+                
+                container.appendChild(resultDiv);
+                
+            } catch (error) {
+                const resultDiv = document.createElement('div');
+                resultDiv.className = 'test-result error';
+                resultDiv.innerHTML = `
+                    <h3>❌ ${name}</h3>
+                    <p>网络错误:</p>
+                    <pre>${error.message}</pre>
+                `;
+                container.appendChild(resultDiv);
+            }
+        }
+        
+        // 页面加载时自动测试
+        window.addEventListener('load', testAPI);
+    </script>
+</body>
+</html>

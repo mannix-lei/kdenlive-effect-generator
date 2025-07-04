@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Modal Test</h1>
+        <button class="btn btn-primary" onclick="showModal()">Show Modal</button>
+        <button class="btn btn-secondary" onclick="hideModal()">Hide Modal</button>
+        
+        <div id="console-output" class="mt-3 p-3 bg-light">
+            <h5>Console Output:</h5>
+            <div id="log"></div>
+        </div>
+    </div>
+
+    <!-- 进度模态框 -->
+    <div class="modal fade" id="progressModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">处理中...</h5>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-3" id="progressMessage">正在处理，请稍候...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let progressModal = null;
+        
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML += `<div>${new Date().toLocaleTimeString()}: ${message}</div>`;
+            console.log(message);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            log('DOMContentLoaded event fired');
+            progressModal = new bootstrap.Modal(document.getElementById('progressModal'));
+            if (progressModal) {
+                log('progressModal initialized successfully');
+            } else {
+                log('Failed to initialize progressModal');
+            }
+        });
+        
+        function showModal() {
+            log('showModal called');
+            if (progressModal) {
+                const modalElement = document.getElementById('progressModal');
+                if (modalElement && !modalElement.classList.contains('show')) {
+                    progressModal.show();
+                    log('progressModal.show() called');
+                } else {
+                    log('Modal is already visible');
+                }
+            } else {
+                log('progressModal is not initialized');
+            }
+        }
+        
+        function hideModal() {
+            log('hideModal called');
+            if (progressModal) {
+                try {
+                    progressModal.hide();
+                    log('progressModal.hide() called');
+                } catch (error) {
+                    log('Error hiding modal: ' + error.message);
+                }
+                
+                setTimeout(() => {
+                    try {
+                        const modalElement = document.getElementById('progressModal');
+                        if (modalElement) {
+                            modalElement.classList.remove('show');
+                            modalElement.style.display = 'none';
+                            modalElement.setAttribute('aria-hidden', 'true');
+                            modalElement.removeAttribute('aria-modal');
+                            modalElement.removeAttribute('role');
+                            log('Modal element cleaned up');
+                        }
+                        
+                        const backdrops = document.querySelectorAll('.modal-backdrop');
+                        backdrops.forEach(backdrop => {
+                            backdrop.remove();
+                            log('Backdrop removed');
+                        });
+                        
+                        document.body.classList.remove('modal-open');
+                        document.body.style.paddingRight = '';
+                        document.body.style.overflow = '';
+                        log('Body cleanup completed');
+                    } catch (error) {
+                        log('Error in cleanup: ' + error.message);
+                    }
+                }, 500);
+            } else {
+                log('progressModal is not initialized');
+            }
+        }
+    </script>
+</body>
+</html>

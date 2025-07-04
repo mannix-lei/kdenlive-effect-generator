@@ -1,0 +1,13 @@
+<effectgroup description="色彩调节、滤镜" id="color_5169" parentIn="0">
+ <description>色彩调节、滤镜 - neon</description>
+ <effect id="avfilter.exposure">
+  <property name="av.exposure">0.29916920835237</property>
+  <property name="av.black">0</property>
+ </effect>
+ <effect id="frei0r.saturat0r">
+  <property name="saturation">1.4682963658953736</property>
+ </effect>
+ <effect id="frei0r.brightness">
+  <property name="brightness">-0.03082015981760071</property>
+ </effect>
+</effectgroup>

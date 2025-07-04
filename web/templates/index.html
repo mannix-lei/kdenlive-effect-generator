@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kdenlive Effect Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">
+                <i class="fas fa-magic"></i> Kdenlive Effect Generator
+            </span>
+            <div class="d-flex">
+                <button class="btn btn-outline-light me-2" onclick="showDemosModal()">
+                    <i class="fas fa-folder-open"></i> 浏览Demos
+                </button>
+                <button class="btn btn-outline-light me-2" onclick="generateEffects()">
+                    <i class="fas fa-plus"></i> 生成特效
+                </button>
+                <button class="btn btn-outline-light" onclick="refreshData()">
+                    <i class="fas fa-sync"></i> 刷新
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <!-- 侧边栏 - 风格列表 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-palette"></i> 特效风格</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="stylesList" class="list-group list-group-flush">
+                            <!-- 风格列表将动态加载 -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 生成特效面板 -->
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h6><i class="fas fa-cog"></i> 生成新特效</h6>
+                    </div>
+                    <div class="card-body">
+                        <form id="generateForm">
+                            <div class="mb-3">
+                                <label class="form-label">风格</label>
+                                <select class="form-select" id="generateStyle" required>
+                                    <option value="">选择风格</option>
+                                    <option value="shake">抖动</option>
+                                    <option value="zoom">缩放</option>
+                                    <option value="blur">模糊</option>
+                                    <option value="transition">转场</option>
+                                    <option value="glitch">故障</option>
+                                    <option value="color">色彩</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">数量</label>
+                                <input type="number" class="form-control" id="generateCount" value="5" min="1" max="20">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-magic"></i> 生成
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主内容区 -->
+            <div class="col-md-9">
+                <!-- 特效列表 -->
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 id="effectsTitle"><i class="fas fa-film"></i> 特效列表</h5>
+                        <div>
+                            <button class="btn btn-sm btn-outline-primary" onclick="generatePreviews()">
+                                <i class="fas fa-video"></i> 批量预览
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="effectsGrid" class="row">
+                            <div class="col-12 text-center text-muted py-5">
+                                <i class="fas fa-mouse-pointer fa-3x mb-3"></i>
+                                <p>选择左侧的风格查看特效</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 特效详情模态框 -->
+    <div class="modal fade" id="effectModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">特效详情</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>预览视频</h6>
+                            <div id="previewContainer">
+                                <video id="previewVideo" class="w-100" controls style="max-height: 400px;">
+                                    您的浏览器不支持视频播放
+                                </video>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>特效信息</h6>
+                            <table class="table table-sm">
+                                <tr>
+                                    <td><strong>名称:</strong></td>
+                                    <td id="effectName"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>描述:</strong></td>
+                                    <td id="effectDescription"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>作者:</strong></td>
+                                    <td id="effectAuthor"></td>
+                                </tr>
+                            </table>
+                            
+                            <h6 class="mt-3">XML代码</h6>
+                            <div class="position-relative">
+                                <pre id="effectXml" class="bg-light p-2" style="max-height: 300px; overflow-y: auto; font-size: 0.8em;"></pre>
+                                <button class="btn btn-sm btn-outline-secondary position-absolute top-0 end-0 m-2" onclick="copyXml()">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="downloadEffect()">
+                        <i class="fas fa-download"></i> 下载特效
+                    </button>
+                    <button type="button" class="btn btn-success" onclick="generateSinglePreview()">
+                        <i class="fas fa-video"></i> 生成预览
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 进度模态框 -->
+    <div class="modal fade" id="progressModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">处理中...</h5>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-3" id="progressMessage">正在处理，请稍候...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 简单的 CSS 加载遮罩 -->
+    <div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 9999; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 20px; border-radius: 8px; text-align: center;">
+            <div class="spinner-border text-primary mb-3" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p id="loadingMessage">正在加载...</p>
+        </div>
+    </div>
+
+    <!-- Demos浏览模态框 -->
+    <div class="modal fade" id="demosModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-folder-open"></i> Demo视频管理
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                <input type="text" class="form-control" id="demoSearch" placeholder="搜索demo视频..." onkeyup="filterDemos()">
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <button class="btn btn-primary" onclick="refreshDemos()">
+                                <i class="fas fa-sync"></i> 刷新
+                            </button>
+                            <button class="btn btn-success" onclick="downloadAllDemos()">
+                                <i class="fas fa-download"></i> 打包下载
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="demosGrid" class="row">
+                        <!-- Demo列表将动态加载 -->
+                    </div>
+                    
+                    <div id="demosEmpty" class="text-center text-muted py-5" style="display: none;">
+                        <i class="fas fa-video-slash fa-3x mb-3"></i>
+                        <p>暂无Demo视频</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
